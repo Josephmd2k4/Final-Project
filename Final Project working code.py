@@ -173,6 +173,8 @@ def burkestage1(event):
         thinkbutton.bind("<Button-1>",thinkattack)
         thinkbutton.grid(column=0,row=2) 
         label3 = tkinter.Label(window2)
+        if hp < 10:
+            label3.configure(text =f'{player_name}\'s Current HP = {hp}', foreground= 'red')
         label3.configure(text=f'{player_name}\'s Current HP = {hp}')
         label3.grid(column=1, row=1)
     else:
