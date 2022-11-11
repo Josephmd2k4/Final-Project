@@ -24,6 +24,13 @@ def namesubmitted(event):
     label1 = tkinter.Label(window2)
     label1.configure(text=f'your name is {player_name}?')
     label1.grid(column=0,row=0)
+    YESbutton = tkinter.ttk.Button(window2, text="YES")
+    YESbutton.bind("<Button-1>",namewindow) #NEXT CHANGE, BRING TO NEXT WINDOW.
+    YESbutton.grid(column=0,row=1)
+    NObutton = tkinter.ttk.Button(window2, text="NO")
+    NObutton.bind("<Button-1>",namewindow)
+    NObutton.grid(column=0,row=2)
+    
     
 def back(event):
     global window2
