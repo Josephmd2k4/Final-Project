@@ -2,7 +2,7 @@ import tkinter
 from tkinter import ttk
 #test
 hp = 20
-#ok im going to show you this thing they showed us which lets us upload our code! so since I added this comment, its an edit right. im going to press control+s to save it.
+#ok now ive saved it
 def clicked(event):
     global hp
     hp = hp + 1
@@ -10,14 +10,14 @@ def clicked(event):
 
 def namesubmitted(event):
     window1.destroy()
-    get_name(event)
+    global player_name
     global label1
     global window2
     global username
     window2 =tkinter.Tk()
-    global player_name
+
     label1 = tkinter.Label(window2)
-    label1.configure(text=f'your name is {player_name}?')
+    label1.configure(text=f'your name is {hp}?')
     label1.grid(column=0,row=0)
     
 def back(event):
@@ -53,7 +53,7 @@ def namewindow(event):
     
 
     entername = tkinter.ttk.Button(window1, text="Submit name")
-    entername.bind("<Button-1>",namesubmitted)
+    entername.bind("<Button-1>", namesubmitted)
     entername.grid(column=0,row=2)
     global window2
     window2.destroy()
