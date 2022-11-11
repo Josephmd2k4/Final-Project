@@ -1,17 +1,95 @@
 import tkinter
 from tkinter import ttk
+import random
 #test
 hp = 20
-
+atkpower = 3
+burkehp = 10
 def clicked(event):
     global hp
     hp = hp + 1
     label1.configure(text=f'Current HP = {hp}')
+def slap(event):
+    global atkpower
+    global window2
+    dmg_dealt = 1 + atkpower
+    if current_fight == 1:
+        global burkehp
+        burkehp = burkehp - dmg_dealt
+        dmgthisturn = dmg_dealt
+        dmg_dealt = 0
+        current_prof = "Dr. Burke!"
+
+
+    window2.destroy()
+    window2 = tkinter.Tk()
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'You dealt {dmgthisturn} damage to {current_prof}')
+    label1.grid(column=0,row=0)
+    NObutton = tkinter.ttk.Button(window2, text="I feel horrible.")
+    if burkehp > 0:
+        NObutton.bind("<Button-1>",burkestage1)
+    else:
+        NObutton.bind("<Button-1>",burkedefeat)
+    NObutton.grid(column=0,row=1)
+def burkedefeat(event):
+    global window2
+    window2.destroy()
+    window2 = tkinter.Tk()
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'You have defeated me, congradulations, but it only gets harder from here.')
+    label1.grid(column=0,row=0)
+
+
+
+def nameconfirmed(event):
+    global window1
+    global window2
+    global player_name
+    window2.destroy()
+    if player_name == "Dr. Roberson":
+        window2=tkinter.Tk()
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'DR. ROBERSON???? this makes no sense!!! why would you fight yourself???')
+        label1.grid(column=0,row=0)
+        NObutton = tkinter.ttk.Button(window2, text="You caught me!")
+        NObutton.bind("<Button-1>",namewindow)
+        NObutton.grid(column=0,row=1)
+    else:
+        window2=tkinter.Tk()
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Okay {player_name}, here\'s the deal, we have to get past Dr. Roberson\'s minions before we can challenge him!')
+        label1.grid(column=0,row=0)
+        label2 = tkinter.Label(window2)
+        label2.configure(text=f'First up is Dr. Burke!!!!!')
+        label2.grid(column=0,row=1)
+        NObutton = tkinter.ttk.Button(window2, text="I'm ready!")
+        NObutton.bind("<Button-1>",burkestage1)
+        NObutton.grid(column=0,row=2)
+        
+def burkestage1(event):
+    global window2
+    global player_name
+    global hp
+    global current_fight
+    global burkehp
+    current_fight = 1
+    window2.destroy()
+    window2=tkinter.Tk()
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'Ra I am doctor burke and you will feel my wrath!')
+    label1.grid(column=0,row=0)
+    label2 = tkinter.Label(window2)
+    label2.configure(text=f'Burke current HP = {burkehp}')
+    label2.grid(column=1,row=0)
+    slapbutton = tkinter.ttk.Button(window2, text="slap!")
+    slapbutton.bind("<Button-1>",slap)
+    slapbutton.grid(column=0,row=1)
+    thinkbutton = tkinter.ttk.Button(window2, text="think")
+    thinkbutton.bind("<Button-1>",thinkattack)
+    thinkbutton.grid(column=0,row=2)
 
 def namesubmitted(event):
-    
-    
-    
     
     global player_name
     global label1
@@ -25,7 +103,7 @@ def namesubmitted(event):
     label1.configure(text=f'your name is {player_name}?')
     label1.grid(column=0,row=0)
     YESbutton = tkinter.ttk.Button(window2, text="YES")
-    YESbutton.bind("<Button-1>",namewindow) #NEXT CHANGE, BRING TO NEXT WINDOW.
+    YESbutton.bind("<Button-1>",nameconfirmed)
     YESbutton.grid(column=0,row=1)
     NObutton = tkinter.ttk.Button(window2, text="NO")
     NObutton.bind("<Button-1>",namewindow)
@@ -66,6 +144,7 @@ def namewindow(event):
     entername.grid(column=0,row=2)
     global window2
     window2.destroy()
+
 
 window1 = tkinter.Tk()
 window1.title("FSC GAME")
