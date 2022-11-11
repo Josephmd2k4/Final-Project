@@ -2,7 +2,7 @@ import tkinter
 from tkinter import ttk
 #test
 hp = 20
-
+#ok im going to show you this thing they showed us which lets us upload our code! so since I added this comment, its an edit right. im going to press control+s to save it.
 def clicked(event):
     global hp
     hp = hp + 1
