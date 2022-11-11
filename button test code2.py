@@ -9,15 +9,20 @@ def clicked(event):
     label1.configure(text=f'Current HP = {hp}')
 
 def namesubmitted(event):
-    window1.destroy()
+    
+    
+    
+    
     global player_name
     global label1
     global window2
     global username
+    player_name = username.get()
+    window1.destroy()
     window2 =tkinter.Tk()
 
     label1 = tkinter.Label(window2)
-    label1.configure(text=f'your name is {hp}?')
+    label1.configure(text=f'your name is {player_name}?')
     label1.grid(column=0,row=0)
     
 def back(event):
@@ -34,10 +39,7 @@ def back(event):
     ohnobutton = tkinter.ttk.Button(window2, text="Oh no!")
     ohnobutton.bind("<Button-1>",namewindow)
     ohnobutton.grid(column=0,row=1)
-def get_name(event):
-        global player_name
-        global username
-        player_name = username.get()
+
 def namewindow(event):
     global window1
     window1 = tkinter.Tk()
