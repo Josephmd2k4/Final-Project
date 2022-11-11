@@ -5,6 +5,7 @@ import random
 hp = 20
 atkpower = 3
 burkehp = 10
+burkeatk = 4
 def clicked(event):
     global hp
     hp = hp + 1
@@ -24,20 +25,65 @@ def slap(event):
     window2.destroy()
     window2 = tkinter.Tk()
     label1 = tkinter.Label(window2)
-    label1.configure(text=f'You dealt {dmgthisturn} damage to {current_prof}')
+    label1.configure(text=f'You dealt {dmgthisturn} damage to {current_prof} with slap!')
     label1.grid(column=0,row=0)
     NObutton = tkinter.ttk.Button(window2, text="I feel horrible.")
     if burkehp > 0:
-        NObutton.bind("<Button-1>",burkestage1)
+        NObutton.bind("<Button-1>",burkestage2)
     else:
         NObutton.bind("<Button-1>",burkedefeat)
     NObutton.grid(column=0,row=1)
+def thinkattack(event):
+    global atkpower
+    global window2
+    window2.destroy()
+    window2 = tkinter.Tk()
+    atkpower = atkpower * 1.5
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'you increased your power!')
+    label1.grid(column=0,row=0)
+    NObutton = tkinter.ttk.Button(window2, text="Swag")
+    NObutton.bind("<Button-1>",burkestage2)
+    NObutton.grid(column=0,row=1)
+def burkestage2(event):
+    burkeatknum = random.randint(1,3) 
+    global window2
+    global hp
+    window2.destroy() 
+    if burkeatknum == 1:
+        window2 = tkinter.Tk()
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Burke uses fireball') 
+        label1.grid(column=0,row=0)
+        dodgenum = random.randint(1,10)
+        if dodgenum == 1:
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'You dodge!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="I\'m just TOO NICE!")
+            NObutton.bind("<Button-1>",burkestage1)
+            NObutton.grid(column=0,row=2)
+        else:
+            hp = hp - burkeatk
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'It hits! you take {burkeatk} damage!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="MAN FUCK!")
+            NObutton.bind("<Button-1>",burkestage1)
+            NObutton.grid(column=0,row=2)
+
+
+        
+
+        
+
+
 def burkedefeat(event):
     global window2
     window2.destroy()
     window2 = tkinter.Tk()
     label1 = tkinter.Label(window2)
-    label1.configure(text=f'You have defeated me, congradulations, but it only gets harder from here.')
+    label1.configure(text=f'You have defeated me, congradulations, but it only gets more difficult from here.')
     label1.grid(column=0,row=0)
 
 
@@ -87,7 +133,10 @@ def burkestage1(event):
     slapbutton.grid(column=0,row=1)
     thinkbutton = tkinter.ttk.Button(window2, text="think")
     thinkbutton.bind("<Button-1>",thinkattack)
-    thinkbutton.grid(column=0,row=2)
+    thinkbutton.grid(column=0,row=2) 
+    label3 = tkinter.Label(window2)
+    label3.configure(text=f'Current HP = {hp}')
+    label3.grid(column=1, row=1)
 
 def namesubmitted(event):
     
