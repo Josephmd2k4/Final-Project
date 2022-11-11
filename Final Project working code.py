@@ -6,6 +6,8 @@ hp = 20
 atkpower = 3
 burkehp = 10
 burkeatk = 4
+cazalashp = 15
+cazalasatk = 6
 def clicked(event):
     global hp
     hp = hp + 1
@@ -20,6 +22,12 @@ def slap(event):
         dmgthisturn = dmg_dealt
         dmg_dealt = 0
         current_prof = "Dr. Burke!"
+    if current_fight == 2:
+        global cazalashp
+        cazalashp = cazalashp - dmg_dealt
+        dmgthisturn = dmg_dealt
+        dmg_dealt = 0
+        current_prof = "Dr. Cazalas!"
 
 
     window2.destroy()
@@ -28,10 +36,42 @@ def slap(event):
     label1.configure(text=f'You dealt {dmgthisturn} damage to {current_prof} with slap!')
     label1.grid(column=0,row=0)
     NObutton = tkinter.ttk.Button(window2, text="I feel horrible.")
-    if burkehp > 0:
+    if current_fight == 1:    
+        if burkehp > 0:
+            NObutton.bind("<Button-1>",burkestage2)
+        else:
+            NObutton.bind("<Button-1>",burkedefeat)
+    elif current_fight == 2:
+        if cazalashp > 0:
+            NObutton.bind("<Button-1>",cazalasstage2)
+        else:
+            NObutton.bind("<Button-1>",cazalasdefeat)
+    NObutton.grid(column=0,row=1)
+def powernap(event):
+    global hp
+    hp += 5
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'you replenished some health!')
+    label1.grid(column=0,row=0)
+    NObutton = tkinter.ttk.Button(window2, text="oh W")
+    if current_fight == 1:
         NObutton.bind("<Button-1>",burkestage2)
-    else:
-        NObutton.bind("<Button-1>",burkedefeat)
+    if current_fight == 2:
+        NObutton.bind("<Button-1>",cazalasstage2)
+    NObutton.grid(column=0,row=1)
+def outcode(event):
+    global atkpower
+    global window2
+    window2.destroy()
+    window2 = tkinter.Tk()
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'you literally cant outcode ur prof, stay humble.')
+    label1.grid(column=0,row=0)
+    NObutton = tkinter.ttk.Button(window2, text="you know what? valid.")
+    if current_fight == 1:
+        NObutton.bind("<Button-1>",burkestage2)
+    if current_fight == 2:
+        NObutton.bind("<Button-1>",cazalasstage2)
     NObutton.grid(column=0,row=1)
 def thinkattack(event):
     global atkpower
@@ -43,7 +83,10 @@ def thinkattack(event):
     label1.configure(text=f'you increased your power!')
     label1.grid(column=0,row=0)
     NObutton = tkinter.ttk.Button(window2, text="Swag")
-    NObutton.bind("<Button-1>",burkestage2)
+    if current_fight == 1:
+        NObutton.bind("<Button-1>",burkestage2)
+    if current_fight == 2:
+        NObutton.bind("<Button-1>",cazalasstage2)
     NObutton.grid(column=0,row=1)
 def burkestage2(event):
     burkeatknum = random.randint(1,3) 
@@ -74,7 +117,7 @@ def burkestage2(event):
             NObutton.grid(column=0,row=2)
     elif burkeatknum == 2:
         label1 = tkinter.Label(window2)
-        label1.configure(text=f'Dr. Burke uses LAZERBEAM!!!!') 
+        label1.configure(text=f'Dr. Burke uses Banana Bullseye!!!!') 
         label1.grid(column=0,row=0)
         dodgenum = random.randint(1,10)
         if dodgenum == 1:
@@ -120,10 +163,22 @@ def burkedefeat(event):
     window2.destroy()
     window2 = tkinter.Tk()
     label1 = tkinter.Label(window2)
-    label1.configure(text=f'You have defeated me, congradulations, but it only gets more difficult from here.')
+    label1.configure(text=f'You have defeated me, congratulations, but it only gets more difficult from here.')
     label1.grid(column=0,row=0)
+    Nextbutton = tkinter.ttk.Button(window2, text="aweeee man")
+    Nextbutton.bind("<Button-1>",level2screen)
+    Nextbutton.grid(column=0,row=2)
 
-
+def cazalasdefeat(event):
+    global window2
+    window2.destroy()
+    window2 = tkinter.Tk()
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'You have defeated me, congratulations, but it only gets more difficult from here.')
+    label1.grid(column=0,row=0)
+    Nextbutton = tkinter.ttk.Button(window2, text="aweeee man")
+    Nextbutton.bind("<Button-1>",)
+    Nextbutton.grid(column=0,row=2)
 
 def nameconfirmed(event):
     global window1
@@ -179,9 +234,150 @@ def burkestage1(event):
         label3.grid(column=1, row=1)
     else:
         label1 = tkinter.Label(window2)
-        label1.configure(text=f'Dr. Burke beat ur ass, try again.')
+        label1.configure(text=f'Dr. Burke went bananas try again.')
         label1.grid(column=0,row=0)
 
+def level2screen(event):
+    global window2
+    global player_name
+    global hp
+    global atkpower
+    atkpower = 4
+    hp = 20
+    window2.destroy()
+    window2=tkinter.Tk()
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'Congratulations! you have gotten stronger and added a new ability!')
+    label1.grid(column=0,row=0)
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'Which ability would you like?')
+    label1.grid(column=0,row=1)
+    getability1button = tkinter.ttk.Button(window2, text="outcode")
+    getability1button.bind("<Button-1>",getoutcode)
+    getability1button.grid(column=0,row=2)
+    getability2button = tkinter.ttk.Button(window2, text="power nap!")
+    getability2button.bind("<Button-1>",getpowernap)
+    getability2button.grid(column=0,row=3)
+def cazalasstage1(event):
+    global window2
+    global player_name
+    global hp
+    global current_fight
+    global cazalashp
+    global ability3
+    current_fight = 2
+    window2.destroy()
+    window2=tkinter.Tk()
+    if hp > 0:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'My name is Dr. Cazalas and this is the saints year.')
+        label1.grid(column=0,row=0)
+        label2 = tkinter.Label(window2)
+        label2.configure(text=f'Cazalas current HP = {cazalashp}')
+        label2.grid(column=1,row=0)
+        slapbutton = tkinter.ttk.Button(window2, text="slap!")
+        slapbutton.bind("<Button-1>",slap)
+        slapbutton.grid(column=0,row=1)
+        thinkbutton = tkinter.ttk.Button(window2, text="think")
+        thinkbutton.bind("<Button-1>",thinkattack)
+        thinkbutton.grid(column=0,row=2)
+        if ability3 == 1:
+            ability3button = tkinter.ttk.Button(window2, text ="out code!")
+            ability3button.bind("<Button-1>",outcode)
+            ability3button.grid(column=1, row = 2)
+        elif ability3 == 2:
+            ability3button = tkinter.ttk.Button(window2, text ="powernap")
+            ability3button.bind("<Button-1>",powernap)
+            ability3button.grid(column=1, row = 2)
+        label3 = tkinter.Label(window2)
+        if hp < 10:
+            label3.configure(text =f'{player_name}\'s Current HP = {hp}', foreground= 'red')
+        label3.configure(text=f'{player_name}\'s Current HP = {hp}')
+        label3.grid(column=1, row=1)
+    else:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Cazalas kicked ur balls, try again')
+        label1.grid(column=0,row=0)
+
+def cazalasstage2(event):
+    cazalasatknum = random.randint(1,3) 
+    global window2
+    global hp
+    global cazalasatk
+    window2.destroy() 
+    window2 = tkinter.Tk()
+    if cazalasatknum == 1:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Cazalas used kick the ball') 
+        label1.grid(column=0,row=0)
+        dodgenum = random.randint(1,10)
+        if dodgenum == 1:
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'You dodge!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="I\'m just TOO NICE!")
+            NObutton.bind("<Button-1>",cazalasstage1)
+            NObutton.grid(column=0,row=2)
+        else:
+            hp = hp - cazalasatk
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'It hits! you take {cazalasatk} damage!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="MAN FUCK!")
+            NObutton.bind("<Button-1>",cazalasstage1)
+            NObutton.grid(column=0,row=2)
+    elif cazalasatknum == 2:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Burke uses Touchdown!') 
+        label1.grid(column=0,row=0)
+        dodgenum = random.randint(1,10)
+        if dodgenum == 1:
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'You dodge!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="I\'m just TOO NICE!")
+            NObutton.bind("<Button-1>",cazalasstage1)
+            NObutton.grid(column=0,row=2)
+        else:
+            hp = hp - 6
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'It hits! you take 6 damage!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="MAN FUCK!")
+            NObutton.bind("<Button-1>",cazalasstage1)
+            NObutton.grid(column=0,row=2)
+    elif cazalasatknum == 3:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Cazalas used Trip to New Orleans') 
+        label1.grid(column=0,row=0)
+        dodgenum = random.randint(1,10)
+        if dodgenum == 1:
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'He doesn\'t make it there!') 
+            label2.grid(column=0,row=1)
+            cazalasatk = cazalasatk - 1
+            NObutton = tkinter.ttk.Button(window2, text="LMFAO")
+            NObutton.bind("<Button-1>",cazalasstage1)
+            NObutton.grid(column=0,row=2)
+        else:
+            cazalasatk = cazalasatk * 2
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'damn. he made it.') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="damn I hate it here.")
+            NObutton.bind("<Button-1>",cazalasstage1)
+            NObutton.grid(column=0,row=2)
+
+
+def getoutcode(event):
+    global ability3
+    ability3 = 1
+    cazalasstage1(event)
+
+def getpowernap(event):
+    global ability3
+    ability3 = 2
+    cazalasstage1(event)
 
 def namesubmitted(event):
     
