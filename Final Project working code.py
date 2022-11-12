@@ -250,7 +250,7 @@ def lewisstage1(event):
         label1.grid(column=0,row=0)
 
 def lewisstage2(event):
-    cazalasatknum = random.randint(1,2) 
+    cazalasatknum = 1
     global window2
     global hp
     global lewisatk
@@ -258,6 +258,8 @@ def lewisstage2(event):
     window2.destroy() 
     window2 = tkinter.Tk()
     if lewishp < 10:
+        cazalasatknum = 2
+    if lewishp < 5:
         cazalasatknum = 3
     if cazalasatknum == 1:
         label1 = tkinter.Label(window2)
