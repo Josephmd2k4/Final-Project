@@ -10,6 +10,8 @@ cazalashp = 15
 cazalasatk = 6
 lewishp = 20
 lewisatk = 8
+eicholtzhp = 30
+eicholtzatk = 10
 def clicked(event):
     global hp
     hp = hp + 1
@@ -331,9 +333,53 @@ def lewisdefeat(event):
     label1.configure(text=f'damn thats so crazy even tho i had a dog')
     label1.grid(column=0,row=0)
     Nextbutton = tkinter.ttk.Button(window2, text="yea for sure idc")
-    Nextbutton.bind("<Button-1>")
+    Nextbutton.bind("<Button-1>", eicholtzstage1)
     Nextbutton.grid(column=0,row=2)
-
+def eicholtzstage1(event):
+    global window2
+    global player_name
+    global hp
+    global current_fight
+    global eicholtzhp
+    global ability3
+    global atkpower
+    global basehp
+    if current_fight == 3:
+        hp = basehp
+        atkpower = 7
+    current_fight = 4
+    window2.destroy()
+    window2=tkinter.Tk()
+    if hp > 0:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'My name is Dr. Eicholtz and I am a robot')
+        label1.grid(column=0,row=0)
+        label2 = tkinter.Label(window2)
+        label2.configure(text=f'Lewis current HP = {eicholtzhp}')
+        label2.grid(column=1,row=0)
+        slapbutton = tkinter.ttk.Button(window2, text="slap!")
+        slapbutton.bind("<Button-1>",slap)
+        slapbutton.grid(column=0,row=1)
+        thinkbutton = tkinter.ttk.Button(window2, text="think")
+        thinkbutton.bind("<Button-1>",thinkattack)
+        thinkbutton.grid(column=0,row=2)
+        if ability3 == 1:
+            ability3button = tkinter.ttk.Button(window2, text ="out code!")
+            ability3button.bind("<Button-1>",outcode)
+            ability3button.grid(column=1, row = 2)
+        elif ability3 == 2:
+            ability3button = tkinter.ttk.Button(window2, text ="powernap")
+            ability3button.bind("<Button-1>",powernap)
+            ability3button.grid(column=1, row = 2)
+        label3 = tkinter.Label(window2)
+        if hp < 10:
+            label3.configure(text =f'{player_name}\'s Current HP = {hp}', foreground= 'red')
+        label3.configure(text=f'{player_name}\'s Current HP = {hp}')
+        label3.grid(column=1, row=1)
+    else:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Eicholtz smoked you, try again.')
+        label1.grid(column=0,row=0)
 def nameconfirmed(event):
     global window1
     global window2
