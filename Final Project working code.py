@@ -11,7 +11,7 @@ cazalasatk = 6
 lewishp = 20
 lewisatk = 8
 eicholtzhp = 30
-eicholtzatk = 10
+eicholtzatk = 8
 def clicked(event):
     global hp
     hp = hp + 1
@@ -38,6 +38,12 @@ def slap(event):
         dmgthisturn = dmg_dealt
         dmg_dealt = 0
         current_prof = "Dr. Lewis"
+    if current_fight == 4:
+        global eicholtzhp
+        eicholtzhp = eicholtzhp - dmg_dealt
+        dmgthisturn = dmg_dealt
+        dmg_dealt = 0
+        current_prof = "Dr. Eicholtz"
 
 
     window2.destroy()
@@ -61,6 +67,11 @@ def slap(event):
             NObutton.bind("<Button-1>",lewisstage2)
         else:
             NObutton.bind("<Button-1>",lewisdefeat)
+    elif current_fight == 4:
+        if eicholtzhp > 0:
+            NObutton.bind("<Button-1>",eicholtzstage2)
+        else:
+            NObutton.bind("<Button-1>",eicholtzdefeat)
     NObutton.grid(column=0,row=1)
 def powernap(event):
     global hp
@@ -79,6 +90,8 @@ def powernap(event):
         NObutton.bind("<Button-1>",cazalasstage2)
     if current_fight == 3:
         NObutton.bind("<Button-1>",lewisstage2)
+    if current_fight == 4:
+        NObutton.bind("<Button-1>",eicholtzstage2)
     NObutton.grid(column=0,row=1)
 def outcode(event):
     global atkpower
@@ -96,6 +109,8 @@ def outcode(event):
         NObutton.bind("<Button-1>",cazalasstage2)
     if current_fight == 3:
         NObutton.bind("<Button-1>",lewisstage2)
+    if current_fight == 4:
+        NObutton.bind("<Button-1>",eicholtzstage2)
     NObutton.grid(column=0,row=1)
 def thinkattack(event):
     global atkpower
@@ -113,6 +128,8 @@ def thinkattack(event):
         NObutton.bind("<Button-1>",cazalasstage2)
     if current_fight == 3:
         NObutton.bind("<Button-1>",lewisstage2)
+    if current_fight == 4:
+        NObutton.bind("<Button-1>",eicholtzstage2)
     NObutton.grid(column=0,row=1)
 def burkestage2(event):
     burkeatknum = random.randint(1,3) 
@@ -202,6 +219,9 @@ def cazalasdefeat(event):
     label1 = tkinter.Label(window2)
     label1.configure(text=f'You have quite literally kicked the ball on me, great job')
     label1.grid(column=0,row=0)
+    label2 = tkinter.Label(window2)
+    label2.configure(text=f'Your stats increase!')
+    label2.grid(column=0,row=1)
     Nextbutton = tkinter.ttk.Button(window2, text="haha balls.")
     Nextbutton.bind("<Button-1>",lewisstage1)
     Nextbutton.grid(column=0,row=2)
@@ -215,7 +235,7 @@ def lewisstage1(event):
     global atkpower
     global basehp
     if current_fight == 2:
-        hp = basehp
+        hp = basehp + 5
         atkpower = 5
     current_fight = 3
     window2.destroy()
@@ -332,9 +352,13 @@ def lewisdefeat(event):
     label1 = tkinter.Label(window2)
     label1.configure(text=f'damn thats so crazy even tho i had a dog')
     label1.grid(column=0,row=0)
+    label2 = tkinter.Label(window2)
+    label2.configure(text=f'your stats increase!')
+    label2.grid(column=0,row=1)
     Nextbutton = tkinter.ttk.Button(window2, text="yea for sure idc")
     Nextbutton.bind("<Button-1>", eicholtzstage1)
     Nextbutton.grid(column=0,row=2)
+
 def eicholtzstage1(event):
     global window2
     global player_name
@@ -345,7 +369,7 @@ def eicholtzstage1(event):
     global atkpower
     global basehp
     if current_fight == 3:
-        hp = basehp
+        hp = basehp + 10
         atkpower = 7
     current_fight = 4
     window2.destroy()
@@ -355,7 +379,7 @@ def eicholtzstage1(event):
         label1.configure(text=f'My name is Dr. Eicholtz and I am a robot')
         label1.grid(column=0,row=0)
         label2 = tkinter.Label(window2)
-        label2.configure(text=f'Lewis current HP = {eicholtzhp}')
+        label2.configure(text=f'Eicholtz current HP = {eicholtzhp}')
         label2.grid(column=1,row=0)
         slapbutton = tkinter.ttk.Button(window2, text="slap!")
         slapbutton.bind("<Button-1>",slap)
@@ -380,6 +404,78 @@ def eicholtzstage1(event):
         label1 = tkinter.Label(window2)
         label1.configure(text=f'Dr. Eicholtz smoked you, try again.')
         label1.grid(column=0,row=0)
+
+def eicholtzstage2(event):
+    burkeatknum = random.randint(1,3) 
+    global window2
+    global hp
+    global eicholtzatk
+    global eicholtzhp
+    window2.destroy() 
+    window2 = tkinter.Tk()
+    if burkeatknum == 1:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Eicholtz uses robot!') 
+        label1.grid(column=0,row=0)
+        dodgenum = random.randint(1,10)
+        if dodgenum == 1:
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'You dodge!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="I\'m just TOO NICE!")
+            NObutton.bind("<Button-1>",eicholtzstage1)
+            NObutton.grid(column=0,row=2)
+        else:
+            hp = hp - eicholtzatk
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'It hits! you take {eicholtzatk} damage!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="MAN FUCK!")
+            NObutton.bind("<Button-1>",eicholtzstage1)
+            NObutton.grid(column=0,row=2)
+    elif burkeatknum == 2:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Eicholtz runs a route on you!') 
+        label1.grid(column=0,row=0)
+        dodgenum = random.randint(1,5)
+        if dodgenum == 1:
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'You swat that thang!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="RAAAAAAA")
+            NObutton.bind("<Button-1>",eicholtzstage1)
+            NObutton.grid(column=0,row=2)
+        else:
+            hp = hp - (eicholtzatk * 1.25)
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'HE MOSSES YOU!!! out of embarrassment you take {eicholtzatk * 1.25} damage!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="wheres the flag??")
+            NObutton.bind("<Button-1>",eicholtzstage1)
+            NObutton.grid(column=0,row=2)
+    elif burkeatknum == 3:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Eicholtz uses seminar') 
+        label1.grid(column=0,row=0)
+        dodgenum = random.randint(1,10)
+        if dodgenum == 1:
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'nobody shows up!') 
+            label2.grid(column=0,row=1)
+            burkeatk = burkeatk - 1
+            NObutton = tkinter.ttk.Button(window2, text="LMFAO")
+            NObutton.bind("<Button-1>",eicholtzstage1)
+            NObutton.grid(column=0,row=2)
+        else:
+            eicholtzatk = eicholtzatk * 1.5
+            eicholtzhp += 7
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'he steals the brainpower of all the kids!! doubling his power and giving some hp!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="ayo WHAT???")
+            NObutton.bind("<Button-1>",eicholtzstage1)
+            NObutton.grid(column=0,row=2)
+
 def nameconfirmed(event):
     global window1
     global window2
