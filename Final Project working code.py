@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import ttk
 import random
-#test
+
 hp = 20
 atkpower = 3
 burkehp = 10
@@ -225,6 +225,7 @@ def cazalasdefeat(event):
     Nextbutton = tkinter.ttk.Button(window2, text="haha balls.")
     Nextbutton.bind("<Button-1>",lewisstage1)
     Nextbutton.grid(column=0,row=2)
+
 def lewisstage1(event):
     global window2
     global player_name
@@ -557,6 +558,7 @@ def level2screen(event):
     getability2button = tkinter.ttk.Button(window2, text="power nap!")
     getability2button.bind("<Button-1>",getpowernap)
     getability2button.grid(column=0,row=3)
+
 def cazalasstage1(event):
     global window2
     global player_name
@@ -671,6 +673,7 @@ def cazalasstage2(event):
             NObutton = tkinter.ttk.Button(window2, text="damn I hate it here.")
             NObutton.bind("<Button-1>",cazalasstage1)
             NObutton.grid(column=0,row=2)
+
 
 
 def getoutcode(event):
