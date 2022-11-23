@@ -1,6 +1,7 @@
 import tkinter
 from tkinter import ttk
 import random
+
 def startingstats():
     global hp
     global atkpower
@@ -26,12 +27,13 @@ def startingstats():
     eicholtzatk = 8
     robersonhp = 50
     robersonatk = 12
-def clicked(event):
+
+def clicked():
     global hp
     hp = hp + 1
     label1.configure(text=f'Current HP = {hp}')
     
-def slap(event):
+def slap():
     global atkpower
     global window2
     dmg_dealt = 1 + atkpower
@@ -89,7 +91,7 @@ def slap(event):
             NObutton.bind("<Button-1>",eicholtzdefeat)
     NObutton.grid(column=0,row=1)
 
-def powernap(event):
+def powernap():
     global hp
     global current_fight
     global window2
@@ -111,7 +113,7 @@ def powernap(event):
         NObutton.bind("<Button-1>",eicholtzstage2)
     NObutton.grid(column=0,row=1)
 
-def outcode(event):
+def outcode():
     global atkpower
     global window2
     global current_fight
@@ -130,7 +132,8 @@ def outcode(event):
     if current_fight == 4:
         NObutton.bind("<Button-1>",eicholtzstage2)
     NObutton.grid(column=0,row=1)
-def thinkattack(event):
+
+def thinkattack():
     global atkpower
     global window2
     window2.destroy()
@@ -149,7 +152,8 @@ def thinkattack(event):
     if current_fight == 4:
         NObutton.bind("<Button-1>",eicholtzstage2)
     NObutton.grid(column=0,row=1)
-def burkestage2(event):
+
+def burkestage2():
     burkeatknum = random.randint(1,3) 
     global window2
     global hp
@@ -218,8 +222,7 @@ def burkestage2(event):
             NObutton.bind("<Button-1>",burkestage1)
             NObutton.grid(column=0,row=2)
 
-
-def burkedefeat(event):
+def burkedefeat():
     global window2
     window2.destroy()
     window2 = tkinter.Tk()
@@ -230,7 +233,7 @@ def burkedefeat(event):
     Nextbutton.bind("<Button-1>",level2screen)
     Nextbutton.grid(column=0,row=2)
 
-def cazalasdefeat(event):
+def cazalasdefeat():
     global window2
     window2.destroy()
     window2 = tkinter.Tk()
@@ -244,7 +247,7 @@ def cazalasdefeat(event):
     Nextbutton.bind("<Button-1>",lewisstage1)
     Nextbutton.grid(column=0,row=2)
 
-def lewisstage1(event):
+def lewisstage1():
     global window2
     global player_name
     global hp
@@ -290,7 +293,7 @@ def lewisstage1(event):
         label1.configure(text=f'Dr. Lewis Arrested you, try again.')
         label1.grid(column=0,row=0)
 
-def lewisstage2(event):
+def lewisstage2():
     cazalasatknum = 1
     global window2
     global hp
@@ -364,7 +367,7 @@ def lewisstage2(event):
             NObutton.bind("<Button-1>",lewisstage1)
             NObutton.grid(column=0,row=2)
 
-def lewisdefeat(event):
+def lewisdefeat():
     global window2
     window2.destroy()
     window2 = tkinter.Tk()
@@ -378,7 +381,7 @@ def lewisdefeat(event):
     Nextbutton.bind("<Button-1>", eicholtzstage1)
     Nextbutton.grid(column=0,row=2)
 
-def eicholtzstage1(event):
+def eicholtzstage1():
     global window2
     global player_name
     global hp
@@ -424,7 +427,7 @@ def eicholtzstage1(event):
         label1.configure(text=f'Dr. Eicholtz smoked you, try again.')
         label1.grid(column=0,row=0)
 
-def eicholtzstage2(event):
+def eicholtzstage2():
     burkeatknum = random.randint(1,3) 
     global window2
     global hp
@@ -495,7 +498,7 @@ def eicholtzstage2(event):
             NObutton.bind("<Button-1>",eicholtzstage1)
             NObutton.grid(column=0,row=2)
 
-def eicholtzdefeat(event):
+def eicholtzdefeat():
     global window2
     global player_name
     window2.destroy()
@@ -510,7 +513,7 @@ def eicholtzdefeat(event):
     Nextbutton.bind("<Button-1>", robersonstage1)
     Nextbutton.grid(column=0,row=2)
 
-def robersonstage1(event):
+def robersonstage1():
     global window2
     global player_name
     global hp
@@ -556,7 +559,7 @@ def robersonstage1(event):
         label1.configure(text=f'Dr. Roberson wins. Try again.')
         label1.grid(column=0,row=0)
 
-def nameconfirmed(event):
+def nameconfirmed():
     global window1
     global window2
     global player_name
@@ -584,7 +587,7 @@ def nameconfirmed(event):
         NObutton.bind("<Button-1>",burkestage1)
         NObutton.grid(column=0,row=2)
         
-def burkestage1(event):
+def burkestage1():
     global window2
     global player_name
     global hp
@@ -616,7 +619,7 @@ def burkestage1(event):
         label1.configure(text=f'Dr. Burke went bananas try again.')
         label1.grid(column=0,row=0)
 
-def level2screen(event):
+def level2screen():
     global window2
     global player_name
     global hp
@@ -638,7 +641,7 @@ def level2screen(event):
     getability2button.bind("<Button-1>",getpowernap)
     getability2button.grid(column=0,row=3)
 
-def cazalasstage1(event):
+def cazalasstage1():
     global window2
     global player_name
     global hp
@@ -684,7 +687,7 @@ def cazalasstage1(event):
         label1.configure(text=f'Dr. Cazalas kicked the ball on you. Try again.')
         label1.grid(column=0,row=0)
 
-def cazalasstage2(event):
+def cazalasstage2():
     cazalasatknum = random.randint(1,3) 
     global window2
     global hp
@@ -753,19 +756,17 @@ def cazalasstage2(event):
             NObutton.bind("<Button-1>",cazalasstage1)
             NObutton.grid(column=0,row=2)
 
-
-
-def getoutcode(event):
+def getoutcode():
     global ability3
     ability3 = 1
-    cazalasstage1(event)
+    cazalasstage1()
 
-def getpowernap(event):
+def getpowernap():
     global ability3
     ability3 = 2
-    cazalasstage1(event)
+    cazalasstage1()
 
-def namesubmitted(event):
+def namesubmitted():
     
     global player_name
     global label1
@@ -785,8 +786,7 @@ def namesubmitted(event):
     NObutton.bind("<Button-1>",namewindow)
     NObutton.grid(column=0,row=2)
     
-    
-def back(event):
+def back():
     global window2
     global window1
     window1.destroy()
@@ -801,7 +801,7 @@ def back(event):
     ohnobutton.bind("<Button-1>",namewindow)
     ohnobutton.grid(column=0,row=1)
 
-def namewindow(event):
+def namewindow():
     global window1
     window1 = tkinter.Tk()
 
@@ -844,4 +844,5 @@ def main():
 
 
     window1.mainloop()
+
 main()
