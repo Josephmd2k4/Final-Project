@@ -1,17 +1,31 @@
 import tkinter
 from tkinter import ttk
 import random
-
-hp = 20
-atkpower = 3
-burkehp = 10
-burkeatk = 4
-cazalashp = 15
-cazalasatk = 6
-lewishp = 20
-lewisatk = 8
-eicholtzhp = 30
-eicholtzatk = 8
+def startingstats():
+    global hp
+    global atkpower
+    global burkeatk
+    global burkehp
+    global cazalasatk
+    global cazalashp
+    global lewisatk
+    global lewishp
+    global eicholtzatk
+    global eicholtzhp
+    global robersonatk
+    global robersonhp
+    hp = 20
+    atkpower = 3
+    burkehp = 10
+    burkeatk = 4
+    cazalashp = 15
+    cazalasatk = 6
+    lewishp = 20
+    lewisatk = 8
+    eicholtzhp = 30
+    eicholtzatk = 8
+    robersonhp = 50
+    robersonatk = 12
 def clicked(event):
     global hp
     hp = hp + 1
@@ -481,6 +495,67 @@ def eicholtzstage2(event):
             NObutton.bind("<Button-1>",eicholtzstage1)
             NObutton.grid(column=0,row=2)
 
+def eicholtzdefeat(event):
+    global window2
+    global player_name
+    window2.destroy()
+    window2 = tkinter.Tk()
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'thats ok {player_name}, just show up to the next IM game.')
+    label1.grid(column=0,row=0)
+    label2 = tkinter.Label(window2)
+    label2.configure(text=f'your stats increase!')
+    label2.grid(column=0,row=1)
+    Nextbutton = tkinter.ttk.Button(window2, text="you bet dude.")
+    Nextbutton.bind("<Button-1>", robersonstage1)
+    Nextbutton.grid(column=0,row=2)
+
+def robersonstage1(event):
+    global window2
+    global player_name
+    global hp
+    global current_fight
+    global robersonhp
+    global ability3
+    global atkpower
+    global basehp
+    if current_fight == 4:
+        hp = basehp + 15
+        atkpower = 10
+    current_fight = 5
+    window2.destroy()
+    window2=tkinter.Tk()
+    if hp > 0:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Muahahaha it is me Dr. Roberson the final boss')
+        label1.grid(column=0,row=0)
+        label2 = tkinter.Label(window2)
+        label2.configure(text=f'Dr. Roberson current HP = {robersonhp}')
+        label2.grid(column=1,row=0)
+        slapbutton = tkinter.ttk.Button(window2, text="slap!")
+        slapbutton.bind("<Button-1>",slap)
+        slapbutton.grid(column=0,row=1)
+        thinkbutton = tkinter.ttk.Button(window2, text="think")
+        thinkbutton.bind("<Button-1>",thinkattack)
+        thinkbutton.grid(column=0,row=2)
+        if ability3 == 1:
+            ability3button = tkinter.ttk.Button(window2, text ="out code!")
+            ability3button.bind("<Button-1>",outcode)
+            ability3button.grid(column=1, row = 2)
+        elif ability3 == 2:
+            ability3button = tkinter.ttk.Button(window2, text ="powernap")
+            ability3button.bind("<Button-1>",powernap)
+            ability3button.grid(column=1, row = 2)
+        label3 = tkinter.Label(window2)
+        if hp < 10:
+            label3.configure(text =f'{player_name}\'s Current HP = {hp}', foreground= 'red')
+        label3.configure(text=f'{player_name}\'s Current HP = {hp}')
+        label3.grid(column=1, row=1)
+    else:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Roberson wins. Try again.')
+        label1.grid(column=0,row=0)
+
 def nameconfirmed(event):
     global window1
     global window2
@@ -746,24 +821,27 @@ def namewindow(event):
     global window2
     window2.destroy()
 
+def main():
+    startingstats()
+    global window1
+    window1 = tkinter.Tk()
+    window1.title("FSC GAME")
 
-window1 = tkinter.Tk()
-window1.title("FSC GAME")
+    label = tkinter.Label(window1, text="Welcome to FSC game!")
+    label.grid(column=0, row=0)
 
-label = tkinter.Label(window1, text="Welcome to FSC game!")
-label.grid(column=0, row=0)
+    label1 = tkinter.Label(window1)
+    label1.configure(text=f'Current HP = {hp}')
+    label1.grid(column=0, row=1)
 
-label1 = tkinter.Label(window1)
-label1.configure(text=f'Current HP = {hp}')
-label1.grid(column=0, row=1)
+    custom_button = tkinter.ttk.Button(window1, text="Add 1 to HP")
+    custom_button.bind("<Button-1>", clicked)
+    custom_button.grid(column=1, row=0)
 
-custom_button = tkinter.ttk.Button(window1, text="Add 1 to HP")
-custom_button.bind("<Button-1>", clicked)
-custom_button.grid(column=1, row=0)
-
-custom_button2 = tkinter.ttk.Button(window1, text="Open game")
-custom_button2.bind("<Button-1>", back)
-custom_button2.grid(column=2, row=0)
+    custom_button2 = tkinter.ttk.Button(window1, text="Open game")
+    custom_button2.bind("<Button-1>", back)
+    custom_button2.grid(column=2, row=0)
 
 
-window1.mainloop()
+    window1.mainloop()
+main()
