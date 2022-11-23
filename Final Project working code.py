@@ -30,6 +30,8 @@ def startingstats():
 
 def clicked():
     global hp
+    global label1
+    global window1
     hp = hp + 1
     label1.configure(text=f'Current HP = {hp}')
     
@@ -153,6 +155,43 @@ def thinkattack():
         NObutton.bind("<Button-1>",eicholtzstage2)
     NObutton.grid(column=0,row=1)
 
+
+
+
+
+
+def burkestage1():
+    global window2
+    global player_name
+    global hp
+    global current_fight
+    global burkehp
+    current_fight = 1
+    window2.destroy()
+    window2=tkinter.Tk()
+    if hp > 0:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Ra I am doctor burke and you will feel my wrath!')
+        label1.grid(column=0,row=0)
+        label2 = tkinter.Label(window2)
+        label2.configure(text=f'Burke current HP = {burkehp}')
+        label2.grid(column=1,row=0)
+        slapbutton = tkinter.ttk.Button(window2, text="slap!")
+        slapbutton.bind("<Button-1>",slap)
+        slapbutton.grid(column=0,row=1)
+        thinkbutton = tkinter.ttk.Button(window2, text="think")
+        thinkbutton.bind("<Button-1>",thinkattack)
+        thinkbutton.grid(column=0,row=2) 
+        label3 = tkinter.Label(window2)
+        if hp < 10:
+            label3.configure(text =f'{player_name}\'s Current HP = {hp}', foreground= 'red')
+        label3.configure(text=f'{player_name}\'s Current HP = {hp}')
+        label3.grid(column=1, row=1)
+    else:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Burke went bananas try again.')
+        label1.grid(column=0,row=0)
+
 def burkestage2():
     burkeatknum = random.randint(1,3) 
     global window2
@@ -233,6 +272,157 @@ def burkedefeat():
     Nextbutton.bind("<Button-1>",level2screen)
     Nextbutton.grid(column=0,row=2)
 
+
+
+def level2screen():
+    global window2
+    global player_name
+    global hp
+    global atkpower
+    atkpower = 4
+    hp = 20
+    window2.destroy()
+    window2=tkinter.Tk()
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'Congratulations! you have gotten stronger and added a new ability!')
+    label1.grid(column=0,row=0)
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'Which ability would you like?')
+    label1.grid(column=0,row=1)
+    getability1button = tkinter.ttk.Button(window2, text="outcode")
+    getability1button.bind("<Button-1>",getoutcode)
+    getability1button.grid(column=0,row=2)
+    getability2button = tkinter.ttk.Button(window2, text="power nap!")
+    getability2button.bind("<Button-1>",getpowernap)
+    getability2button.grid(column=0,row=3)
+
+def getoutcode():
+    global ability3
+    ability3 = 1
+    cazalasstage1()
+
+def getpowernap():
+    global ability3
+    ability3 = 2
+    cazalasstage1()
+
+
+
+def cazalasstage1():
+    global window2
+    global player_name
+    global hp
+    global current_fight
+    global cazalashp
+    global ability3
+    global atkpower
+    global basehp
+    if current_fight == 1:
+        hp = basehp
+        atkpower = 3
+    current_fight = 2
+    window2.destroy()
+    window2=tkinter.Tk()
+    if hp > 0:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'My name is Dr. Cazalas and this is the saints year.')
+        label1.grid(column=0,row=0)
+        label2 = tkinter.Label(window2)
+        label2.configure(text=f'Cazalas current HP = {cazalashp}')
+        label2.grid(column=1,row=0)
+        slapbutton = tkinter.ttk.Button(window2, text="slap!")
+        slapbutton.bind("<Button-1>",slap)
+        slapbutton.grid(column=0,row=1)
+        thinkbutton = tkinter.ttk.Button(window2, text="think")
+        thinkbutton.bind("<Button-1>",thinkattack)
+        thinkbutton.grid(column=0,row=2)
+        if ability3 == 1:
+            ability3button = tkinter.ttk.Button(window2, text ="out code!")
+            ability3button.bind("<Button-1>",outcode)
+            ability3button.grid(column=1, row = 2)
+        elif ability3 == 2:
+            ability3button = tkinter.ttk.Button(window2, text ="powernap")
+            ability3button.bind("<Button-1>",powernap)
+            ability3button.grid(column=1, row = 2)
+        label3 = tkinter.Label(window2)
+        if hp < 10:
+            label3.configure(text =f'{player_name}\'s Current HP = {hp}', foreground= 'red')
+        label3.configure(text=f'{player_name}\'s Current HP = {hp}')
+        label3.grid(column=1, row=1)
+    else:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Cazalas kicked the ball on you. Try again.')
+        label1.grid(column=0,row=0)
+
+def cazalasstage2():
+    cazalasatknum = random.randint(1,3) 
+    global window2
+    global hp
+    global cazalasatk
+    window2.destroy() 
+    window2 = tkinter.Tk()
+    if cazalasatknum == 1:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Cazalas used kick the ball') 
+        label1.grid(column=0,row=0)
+        dodgenum = random.randint(1,10)
+        if dodgenum == 1:
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'You dodge!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="I\'m just TOO NICE!")
+            NObutton.bind("<Button-1>",cazalasstage1)
+            NObutton.grid(column=0,row=2)
+        else:
+            hp = hp - cazalasatk
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'It hits! you take {cazalasatk} damage!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="ouch!")
+            NObutton.bind("<Button-1>",cazalasstage1)
+            NObutton.grid(column=0,row=2)
+    elif cazalasatknum == 2:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Cazalas uses Touchdown!') 
+        label1.grid(column=0,row=0)
+        dodgenum = random.randint(1,10)
+        if dodgenum == 1:
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'You dodge!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="I\'m just TOO NICE!")
+            NObutton.bind("<Button-1>",cazalasstage1)
+            NObutton.grid(column=0,row=2)
+        else:
+            hp = hp - 6
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'It hits! you take 6 damage!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="Ouch!")
+            NObutton.bind("<Button-1>",cazalasstage1)
+            NObutton.grid(column=0,row=2)
+    elif cazalasatknum == 3:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Cazalas used Trip to New Orleans') 
+        label1.grid(column=0,row=0)
+        dodgenum = random.randint(1,10)
+        if dodgenum == 1:
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'He doesn\'t make it there!') 
+            label2.grid(column=0,row=1)
+            cazalasatk = cazalasatk - 1
+            NObutton = tkinter.ttk.Button(window2, text="awe.")
+            NObutton.bind("<Button-1>",cazalasstage1)
+            NObutton.grid(column=0,row=2)
+        else:
+            cazalasatk = cazalasatk * 2
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'damn. he made it.') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="damn I hate it here.")
+            NObutton.bind("<Button-1>",cazalasstage1)
+            NObutton.grid(column=0,row=2)
+
 def cazalasdefeat():
     global window2
     window2.destroy()
@@ -246,6 +436,9 @@ def cazalasdefeat():
     Nextbutton = tkinter.ttk.Button(window2, text="awesome.")
     Nextbutton.bind("<Button-1>",lewisstage1)
     Nextbutton.grid(column=0,row=2)
+
+
+
 
 def lewisstage1():
     global window2
@@ -380,6 +573,9 @@ def lewisdefeat():
     Nextbutton = tkinter.ttk.Button(window2, text="yea for sure.")
     Nextbutton.bind("<Button-1>", eicholtzstage1)
     Nextbutton.grid(column=0,row=2)
+
+
+
 
 def eicholtzstage1():
     global window2
@@ -559,6 +755,9 @@ def robersonstage1():
         label1.configure(text=f'Dr. Roberson wins. Try again.')
         label1.grid(column=0,row=0)
 
+
+
+
 def nameconfirmed():
     global window1
     global window2
@@ -586,185 +785,6 @@ def nameconfirmed():
         NObutton = tkinter.ttk.Button(window2, text="I'm ready!")
         NObutton.bind("<Button-1>",burkestage1)
         NObutton.grid(column=0,row=2)
-        
-def burkestage1():
-    global window2
-    global player_name
-    global hp
-    global current_fight
-    global burkehp
-    current_fight = 1
-    window2.destroy()
-    window2=tkinter.Tk()
-    if hp > 0:
-        label1 = tkinter.Label(window2)
-        label1.configure(text=f'Ra I am doctor burke and you will feel my wrath!')
-        label1.grid(column=0,row=0)
-        label2 = tkinter.Label(window2)
-        label2.configure(text=f'Burke current HP = {burkehp}')
-        label2.grid(column=1,row=0)
-        slapbutton = tkinter.ttk.Button(window2, text="slap!")
-        slapbutton.bind("<Button-1>",slap)
-        slapbutton.grid(column=0,row=1)
-        thinkbutton = tkinter.ttk.Button(window2, text="think")
-        thinkbutton.bind("<Button-1>",thinkattack)
-        thinkbutton.grid(column=0,row=2) 
-        label3 = tkinter.Label(window2)
-        if hp < 10:
-            label3.configure(text =f'{player_name}\'s Current HP = {hp}', foreground= 'red')
-        label3.configure(text=f'{player_name}\'s Current HP = {hp}')
-        label3.grid(column=1, row=1)
-    else:
-        label1 = tkinter.Label(window2)
-        label1.configure(text=f'Dr. Burke went bananas try again.')
-        label1.grid(column=0,row=0)
-
-def level2screen():
-    global window2
-    global player_name
-    global hp
-    global atkpower
-    atkpower = 4
-    hp = 20
-    window2.destroy()
-    window2=tkinter.Tk()
-    label1 = tkinter.Label(window2)
-    label1.configure(text=f'Congratulations! you have gotten stronger and added a new ability!')
-    label1.grid(column=0,row=0)
-    label1 = tkinter.Label(window2)
-    label1.configure(text=f'Which ability would you like?')
-    label1.grid(column=0,row=1)
-    getability1button = tkinter.ttk.Button(window2, text="outcode")
-    getability1button.bind("<Button-1>",getoutcode)
-    getability1button.grid(column=0,row=2)
-    getability2button = tkinter.ttk.Button(window2, text="power nap!")
-    getability2button.bind("<Button-1>",getpowernap)
-    getability2button.grid(column=0,row=3)
-
-def cazalasstage1():
-    global window2
-    global player_name
-    global hp
-    global current_fight
-    global cazalashp
-    global ability3
-    global atkpower
-    global basehp
-    if current_fight == 1:
-        hp = basehp
-        atkpower = 3
-    current_fight = 2
-    window2.destroy()
-    window2=tkinter.Tk()
-    if hp > 0:
-        label1 = tkinter.Label(window2)
-        label1.configure(text=f'My name is Dr. Cazalas and this is the saints year.')
-        label1.grid(column=0,row=0)
-        label2 = tkinter.Label(window2)
-        label2.configure(text=f'Cazalas current HP = {cazalashp}')
-        label2.grid(column=1,row=0)
-        slapbutton = tkinter.ttk.Button(window2, text="slap!")
-        slapbutton.bind("<Button-1>",slap)
-        slapbutton.grid(column=0,row=1)
-        thinkbutton = tkinter.ttk.Button(window2, text="think")
-        thinkbutton.bind("<Button-1>",thinkattack)
-        thinkbutton.grid(column=0,row=2)
-        if ability3 == 1:
-            ability3button = tkinter.ttk.Button(window2, text ="out code!")
-            ability3button.bind("<Button-1>",outcode)
-            ability3button.grid(column=1, row = 2)
-        elif ability3 == 2:
-            ability3button = tkinter.ttk.Button(window2, text ="powernap")
-            ability3button.bind("<Button-1>",powernap)
-            ability3button.grid(column=1, row = 2)
-        label3 = tkinter.Label(window2)
-        if hp < 10:
-            label3.configure(text =f'{player_name}\'s Current HP = {hp}', foreground= 'red')
-        label3.configure(text=f'{player_name}\'s Current HP = {hp}')
-        label3.grid(column=1, row=1)
-    else:
-        label1 = tkinter.Label(window2)
-        label1.configure(text=f'Dr. Cazalas kicked the ball on you. Try again.')
-        label1.grid(column=0,row=0)
-
-def cazalasstage2():
-    cazalasatknum = random.randint(1,3) 
-    global window2
-    global hp
-    global cazalasatk
-    window2.destroy() 
-    window2 = tkinter.Tk()
-    if cazalasatknum == 1:
-        label1 = tkinter.Label(window2)
-        label1.configure(text=f'Dr. Cazalas used kick the ball') 
-        label1.grid(column=0,row=0)
-        dodgenum = random.randint(1,10)
-        if dodgenum == 1:
-            label2 = tkinter.Label(window2)
-            label2.configure(text=f'You dodge!') 
-            label2.grid(column=0,row=1)
-            NObutton = tkinter.ttk.Button(window2, text="I\'m just TOO NICE!")
-            NObutton.bind("<Button-1>",cazalasstage1)
-            NObutton.grid(column=0,row=2)
-        else:
-            hp = hp - cazalasatk
-            label2 = tkinter.Label(window2)
-            label2.configure(text=f'It hits! you take {cazalasatk} damage!') 
-            label2.grid(column=0,row=1)
-            NObutton = tkinter.ttk.Button(window2, text="ouch!")
-            NObutton.bind("<Button-1>",cazalasstage1)
-            NObutton.grid(column=0,row=2)
-    elif cazalasatknum == 2:
-        label1 = tkinter.Label(window2)
-        label1.configure(text=f'Dr. Cazalas uses Touchdown!') 
-        label1.grid(column=0,row=0)
-        dodgenum = random.randint(1,10)
-        if dodgenum == 1:
-            label2 = tkinter.Label(window2)
-            label2.configure(text=f'You dodge!') 
-            label2.grid(column=0,row=1)
-            NObutton = tkinter.ttk.Button(window2, text="I\'m just TOO NICE!")
-            NObutton.bind("<Button-1>",cazalasstage1)
-            NObutton.grid(column=0,row=2)
-        else:
-            hp = hp - 6
-            label2 = tkinter.Label(window2)
-            label2.configure(text=f'It hits! you take 6 damage!') 
-            label2.grid(column=0,row=1)
-            NObutton = tkinter.ttk.Button(window2, text="Ouch!")
-            NObutton.bind("<Button-1>",cazalasstage1)
-            NObutton.grid(column=0,row=2)
-    elif cazalasatknum == 3:
-        label1 = tkinter.Label(window2)
-        label1.configure(text=f'Dr. Cazalas used Trip to New Orleans') 
-        label1.grid(column=0,row=0)
-        dodgenum = random.randint(1,10)
-        if dodgenum == 1:
-            label2 = tkinter.Label(window2)
-            label2.configure(text=f'He doesn\'t make it there!') 
-            label2.grid(column=0,row=1)
-            cazalasatk = cazalasatk - 1
-            NObutton = tkinter.ttk.Button(window2, text="awe.")
-            NObutton.bind("<Button-1>",cazalasstage1)
-            NObutton.grid(column=0,row=2)
-        else:
-            cazalasatk = cazalasatk * 2
-            label2 = tkinter.Label(window2)
-            label2.configure(text=f'damn. he made it.') 
-            label2.grid(column=0,row=1)
-            NObutton = tkinter.ttk.Button(window2, text="damn I hate it here.")
-            NObutton.bind("<Button-1>",cazalasstage1)
-            NObutton.grid(column=0,row=2)
-
-def getoutcode():
-    global ability3
-    ability3 = 1
-    cazalasstage1()
-
-def getpowernap():
-    global ability3
-    ability3 = 2
-    cazalasstage1()
 
 def namesubmitted():
     
@@ -824,6 +844,7 @@ def namewindow():
 def main():
     startingstats()
     global window1
+    global label1
     window1 = tkinter.Tk()
     window1.title("FSC GAME")
 
