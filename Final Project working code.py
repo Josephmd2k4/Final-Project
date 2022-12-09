@@ -898,15 +898,39 @@ def bigtwist(event):
     window2.destroy()
     window2 = tkinter.Tk()
     label1 = tkinter.Label(window2)
-    label1.configure(text=f'{player_name}, it was I, ')
+    label1.configure(text=f'{player_name}, it was I, Adele')
     label1.grid(column=0,row=0)
     label2 = tkinter.Label(window2)
     label2.configure(text=f'I should have known!')
     label2.grid(column=0,row=1)
     Nextbutton = tkinter.ttk.Button(window2, text="oh no.")
-    Nextbutton.bind("<Button-1>", bigtwist)
+    Nextbutton.bind("<Button-1>", endingscene)
     Nextbutton.grid(column=0,row=2)
-
+def endingscene(event):
+    global window2
+    global player_name
+    window2.destroy()
+    window2 = tkinter.Tk()
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'Jokes on you Adele, its about the friends you make along the way')
+    label1.grid(column=0,row=0)
+    Nextbutton = tkinter.ttk.Button(window2, text="Use the big bad move")
+    Nextbutton.bind("<Button-1>", finale)
+    Nextbutton.grid(column=0,row=2)
+def finale(event):
+    global window2
+    global player_name
+    window2.destroy()
+    window2 = tkinter.Tk()
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'You deal 100000000 damage to adele')
+    label1.grid(column=0,row=0)
+    Nextbutton = tkinter.ttk.Button(window2, text="finish the game")
+    Nextbutton.bind("<Button-1>", over)
+    Nextbutton.grid(column=0,row=2)
+def over(event):
+    global window2
+    window2.destroy()
 def nameconfirmed(event):
     global window1
     global window2
