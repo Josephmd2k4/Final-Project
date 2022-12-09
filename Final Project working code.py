@@ -32,7 +32,7 @@ def clicked(event):
     global hp
     global label1
     global window1
-    hp = hp + 1
+    hp = hp + 1000
     label1.configure(text=f'Current HP = {hp}')
     
 def slap(event):
@@ -63,6 +63,12 @@ def slap(event):
         dmgthisturn = dmg_dealt
         dmg_dealt = 0
         current_prof = "Dr. Eicholtz"
+    if current_fight == 5:
+        global robersonhp
+        robersonhp = robersonhp - dmg_dealt
+        dmgthisturn = dmg_dealt
+        dmg_dealt = 0
+        current_prof = "Dr. Roberson"
 
 
     window2.destroy()
@@ -91,6 +97,11 @@ def slap(event):
             NObutton.bind("<Button-1>",eicholtzstage2)
         else:
             NObutton.bind("<Button-1>",eicholtzdefeat)
+    elif current_fight == 5:
+        if robersonhp > 0:
+            NObutton.bind("<Button-1>",robersonstage2)
+        else:
+            NObutton.bind("<Button-1>",robersondefeat)
     NObutton.grid(column=0,row=1)
 
 def powernap(event):
@@ -113,6 +124,8 @@ def powernap(event):
         NObutton.bind("<Button-1>",lewisstage2)
     if current_fight == 4:
         NObutton.bind("<Button-1>",eicholtzstage2)
+    if current_fight == 5:
+        NObutton.bind("<Button-1>",robersonstage2)
     NObutton.grid(column=0,row=1)
 
 def outcode(event):
@@ -133,6 +146,8 @@ def outcode(event):
         NObutton.bind("<Button-1>",lewisstage2)
     if current_fight == 4:
         NObutton.bind("<Button-1>",eicholtzstage2)
+    if current_fight == 5:
+        NObutton.bind("<Button-1>",robersonstage2)
     NObutton.grid(column=0,row=1)
 
 def thinkattack(event):
@@ -153,8 +168,41 @@ def thinkattack(event):
         NObutton.bind("<Button-1>",lewisstage2)
     if current_fight == 4:
         NObutton.bind("<Button-1>",eicholtzstage2)
+    if current_fight == 5:
+        NObutton.bind("<Button-1>",robersonstage2)
     NObutton.grid(column=0,row=1)
 
+def multislap(event):
+    global atkpower
+    global window2
+    global current_fight
+    dmg_dealt = 1 + atkpower
+    if current_fight == 5:
+        global robersonhp
+        dmgthisturn = 0
+        while True:
+            chance_of_hit = random.randint(1,4)
+            if chance_of_hit == 1:
+                dmgthisturn = 0
+                current_prof = "Dr. Roberson"
+                break
+            else:
+                robersonhp = robersonhp - dmg_dealt
+                dmgthisturn += dmg_dealt
+                dmg_dealt = 0
+                current_prof = "Dr. Roberson"
+    window2.destroy()
+    window2 = tkinter.Tk()
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'You dealt {dmgthisturn} damage to {current_prof} with multislap!')
+    label1.grid(column=0,row=0)
+    NObutton = tkinter.ttk.Button(window2, text="I feel horrible, multiple times.")
+    if current_fight == 5:    
+        if robersonhp > 0:
+            NObutton.bind("<Button-1>",robersonstage2)
+        else:
+            NObutton.bind("<Button-1>",robersondefeat)
+    NObutton.grid(column=0,row=1)
 
 
 
@@ -746,6 +794,9 @@ def robersonstage1(event):
             ability3button.bind("<Button-1>",powernap)
             ability3button.grid(column=1, row = 2)
         label3 = tkinter.Label(window2)
+        multibutton = tkinter.ttk.Button(window2, text="mutlislap")
+        multibutton.bind("<Button-1>",multislap)
+        multibutton.grid(column=0,row=3)
         if hp < 10:
             label3.configure(text =f'{player_name}\'s Current HP = {hp}', foreground= 'red')
         label3.configure(text=f'{player_name}\'s Current HP = {hp}')
@@ -755,8 +806,106 @@ def robersonstage1(event):
         label1.configure(text=f'Dr. Roberson wins. Try again.')
         label1.grid(column=0,row=0)
 
+def robersonstage2(event):
+    burkeatknum = random.randint(1,3) 
+    global window2
+    global hp
+    global robersonatk
+    global robersonhp
+    window2.destroy() 
+    window2 = tkinter.Tk()
+    if burkeatknum == 1:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Roberson uses the force') 
+        label1.grid(column=0,row=0)
+        dodgenum = random.randint(1,10)
+        if dodgenum == 1:
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'You dodge!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="I\'m just TOO NICE!")
+            NObutton.bind("<Button-1>",robersonstage1)
+            NObutton.grid(column=0,row=2)
+        else:
+            hp = hp - robersonatk
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'It hits! you take {robersonatk} damage!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="ouch!")
+            NObutton.bind("<Button-1>",robersonstage1)
+            NObutton.grid(column=0,row=2)
+    elif burkeatknum == 2:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Roberson gives you a bad grade') 
+        label1.grid(column=0,row=0)
+        dodgenum = random.randint(1,5)
+        if dodgenum == 1:
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'You did a makeup assignment') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="awesome.")
+            NObutton.bind("<Button-1>",robersonstage1)
+            NObutton.grid(column=0,row=2)
+        else:
+            hp = hp - (eicholtzatk * 1.25)
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'that sucks, you take {robersonatk * 1.25} damage!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="this class is literally completion how.")
+            NObutton.bind("<Button-1>",robersonstage1)
+            NObutton.grid(column=0,row=2)
+    elif burkeatknum == 3:
+        label1 = tkinter.Label(window2)
+        label1.configure(text=f'Dr. Roberson uses boss') 
+        label1.grid(column=0,row=0)
+        dodgenum = random.randint(1,10)
+        if dodgenum == 1:
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'It fails!') 
+            label2.grid(column=0,row=1)
+            burkeatk = burkeatk - 1
+            NObutton = tkinter.ttk.Button(window2, text="great!")
+            NObutton.bind("<Button-1>",robersonstage1)
+            NObutton.grid(column=0,row=2)
+        else:
+            robersonatk = robersonatk * 1.5
+            robersonhp += 7
+            label2 = tkinter.Label(window2)
+            label2.configure(text=f'He gets stronger!') 
+            label2.grid(column=0,row=1)
+            NObutton = tkinter.ttk.Button(window2, text="WHAT??")
+            NObutton.bind("<Button-1>",robersonstage1)
+            NObutton.grid(column=0,row=2)
 
+def robersondefeat(event):
+    global window2
+    global player_name
+    window2.destroy()
+    window2 = tkinter.Tk()
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'{player_name}, you should have known I was not behind this,')
+    label1.grid(column=0,row=0)
+    label2 = tkinter.Label(window2)
+    label2.configure(text=f'what do you mean?')
+    label2.grid(column=0,row=1)
+    Nextbutton = tkinter.ttk.Button(window2, text="oh no.")
+    Nextbutton.bind("<Button-1>", bigtwist)
+    Nextbutton.grid(column=0,row=2)
 
+def bigtwist(event):
+    global window2
+    global player_name
+    window2.destroy()
+    window2 = tkinter.Tk()
+    label1 = tkinter.Label(window2)
+    label1.configure(text=f'{player_name}, it was I, ')
+    label1.grid(column=0,row=0)
+    label2 = tkinter.Label(window2)
+    label2.configure(text=f'I should have known!')
+    label2.grid(column=0,row=1)
+    Nextbutton = tkinter.ttk.Button(window2, text="oh no.")
+    Nextbutton.bind("<Button-1>", bigtwist)
+    Nextbutton.grid(column=0,row=2)
 
 def nameconfirmed(event):
     global window1
